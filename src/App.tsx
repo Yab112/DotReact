@@ -1,4 +1,4 @@
-// App.tsx or App.js
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -11,10 +11,10 @@ import Horzotalline from './components/Horzotalline';
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen"> 
       <Header />
-      <Horzotalline/>
-      <main>
+      <Horzotalline />
+      <main className="flex-grow mt-4 mb-4"> 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<About />} />
@@ -22,10 +22,11 @@ const App: React.FC = () => {
           <Route path="/support" element={<Support />} />
         </Routes>
       </main>
-      <Horzotalline/>
+      <Horzotalline />
       <Footer />
     </div>
   );
 };
 
 export default App;
+

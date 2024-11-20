@@ -1,8 +1,13 @@
 import React from 'react'
+import OurTeam from '../components/OurTeam'
+
 
 const  About = () => {
   return (
-    <div className='flex mx-auto justify-center h-screen items-center text-8xl'> About Page </div>
+    <div className='flex mx-auto justify-center  items-center text-8xl'> 
+      
+    </div>
+
   )
 }
 
