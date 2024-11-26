@@ -4,7 +4,10 @@ import HeroSection from '../components/HeroSection'
 import OurTeam from '../components/OurTeam'
 import image from "../../public/data"
 
-const Home = () => {
+interface UserDashboardProps {
+  onLogout: () => void;
+}
+const Home : React.FC<UserDashboardProps> = ({ onLogout }) => {
 
   return (
     <div className="w-full"> 
