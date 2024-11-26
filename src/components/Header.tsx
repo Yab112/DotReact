@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header: React.FC = () => (
+
+interface UserDashboardProps {
+  onLogout: () => void;
+}
+
+const Header: React.FC<UserDashboardProps> = ({ onLogout }) => (
   <header className="flex p-3 justify-between items-center px-10 backdrop-blur-2xl ">
     <h2 className="text-4xl font-extrabold tracking-wider hover:text-teal-400 cursor-pointer transition-colors">
       <Link to="./" >PapuCorp.</Link>
@@ -31,6 +36,7 @@ const Header: React.FC = () => (
         </span>
         <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
       </li>
+      <button onClick={onLogout}>Logout</button>  
     </nav>
   </header>
 );
