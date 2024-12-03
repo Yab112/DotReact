@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(true);
+  
 
   const usernameRegex = /^[a-zA-Z0-9]{4,12}$/;
   const passwordRegex = /^[a-zA-Z0-9@#$%]{6,20}$/;
@@ -55,6 +56,8 @@ const App: React.FC = () => {
 
     toast.info("You have logged out."); 
   };
+
+  
 
   return (
     <div className="flex flex-col min-h-screen">
