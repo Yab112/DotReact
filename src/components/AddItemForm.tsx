@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,onChange} from "react";
 
 interface AddItemFormProps {
   addItem: (item: string) => void;
@@ -16,6 +16,13 @@ const AddItemForm: React.FC<AddItemFormProps> = ({ addItem }) => {
   return (
     <form 
       onSubmit={handleSubmit} 
+
+      onChange={(e: React.ChangeEvent<HTMLFormElement>) => {
+        if (e.target instanceof HTMLInputElement) {
+          console.log(e.target.value);
+        }
+      }}
+      
       className="flex flex-col items-center space-y-4 bg-gray-100 p-4 rounded-lg shadow-md w-full max-w-md mx-auto mt-6 max-h-32  "
     >
       <input
