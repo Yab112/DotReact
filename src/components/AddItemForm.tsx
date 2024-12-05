@@ -1,4 +1,4 @@
-import React, { useState ,onChange} from "react";
+import React, { useState } from "react";
 
 interface AddItemFormProps {
   addItem: (item: string) => void;
