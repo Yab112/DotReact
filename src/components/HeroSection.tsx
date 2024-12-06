@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Button } from "../components/ui/button"
+import Counter from './Counter'
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false)
@@ -14,6 +15,7 @@ export default function HeroSection() {
       {/* Background Pattern */}
       
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
+        <Counter/>
         <h1 
           className={`text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
