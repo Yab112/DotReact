@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { fetchWeatherData } from "../../services/weatherService";
+import  fetchWeatherData  from "../../services/weatherService";
 
 interface WeatherContextType {
   weather: any;

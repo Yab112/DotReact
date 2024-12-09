@@ -1,4 +1,4 @@
-export const fetchWeatherData = async (city: string) => {
+const fetchWeatherData = async (city: string) => {
     const apiKey = "20da3ca5c9msh904e91bdd47e22fp10fb6cjsn38733084cec5";
     const apiHost = "open-weather13.p.rapidapi.com";
     
@@ -19,3 +19,4 @@ export const fetchWeatherData = async (city: string) => {
     return response.json();
   };
   
+  export default fetchWeatherData;
