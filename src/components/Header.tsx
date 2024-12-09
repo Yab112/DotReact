@@ -32,7 +32,7 @@ const Header: React.FC<UserDashboardProps> = ({ onLogout }) => (
       </li>
       <li className="relative group cursor-pointer">
         <span className="transition-colors group-hover:text-teal-400">
-        <Link to="/support">Support</Link>
+        <Link to="/Weather">Weather</Link>
         </span>
         <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
       </li>
