@@ -1,19 +1,21 @@
-import axios from "axios";
-
-const API_KEY = "your_openweathermap_api_key";
-const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
-
 export const fetchWeatherData = async (city: string) => {
-  try {
-    const response = await axios.get(BASE_URL, {
-      params: {
-        q: city,
-        appid: API_KEY,
-        units: "imperial",
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Failed to fetch weather data");
-  }
-};
+    const apiKey = "20da3ca5c9msh904e91bdd47e22fp10fb6cjsn38733084cec5";
+    const apiHost = "open-weather13.p.rapidapi.com";
+    
+    const response = await fetch(
+      `https://open-weather13.p.rapidapi.com/city/${city}/EN`,
+      {
+        headers: {
+          "X-Rapidapi-Key": apiKey,
+          "X-Rapidapi-Host": apiHost,
+        },
+      }
+    );
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch weather data. Please try again.");
+    }
+  
+    return response.json();
+  };
+  

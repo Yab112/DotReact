@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useWeatherContext } from "../context/WeatherContext";
 import { FaTemperatureHigh, FaWind, FaTint } from "react-icons/fa";
-import ReactLoading from "react-loading";
 
 const WeatherPage: React.FC = () => {
   const { weather, loading, error, getWeather } = useWeatherContext();
