@@ -9,8 +9,10 @@ import LoginForm from "./pages/LoginForm";
 import AdminDashboard from "./pages/AdminDashboard";
 import About from "./pages/About";
 import Enterprise from "./pages/Enterprise";
-import Support from "./pages/Support";
 import Home from "./pages/Home";
+import Weather from "./pages/Weather";
+import WeatherPage from "./pages/Weather";
+import { WeatherProvider } from "./context/WeatherContext";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -114,8 +116,12 @@ const App: React.FC = () => {
               element={isLoggedIn ? <Enterprise /> : <Navigate to="/" replace />}
             />
             <Route
-              path="/support"
-              element={isLoggedIn ? <Support /> : <Navigate to="/" replace />}
+              path="/weather"
+              element={isLoggedIn ? 
+              <WeatherProvider>
+                <WeatherPage />
+              </WeatherProvider> : 
+              <Navigate to="/" replace />}
             />
           </Route>
         </Routes>
