@@ -1,65 +1,121 @@
-import { useState, useEffect } from 'react'
-import { ArrowRight } from 'lucide-react'
-import { Button } from "../components/ui/button"
-import Counter from './Counter'
+import React, { useState } from "react";
+import { FaCalendarAlt, FaGlobe, FaStar } from "react-icons/fa";
+import Header from "./Header";
+import { useMovieContext } from "../context/MoviesContext";
+import ReactLoading from "react-loading";
 
-export default function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false)
+const HeroSection: React.FC = () => {
+  const { getMovies, movies, loading, error } = useMovieContext();
+  const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      await getMovies(query);
+    }
+  };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden ">
-      {/* Background Pattern */}
-      
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
-        <Counter/>
-        <h1 
-          className={`text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-        >
-          Welcome to <span className="text-blue-600">Papucorp</span>
+    <div
+      className="flex flex-col min-h-screen bg-cover bg-center text-white"
+      style={{
+        backgroundImage:
+          "url('https://media.thepopverse.com/media/poster-a-w44b4y11qxsetkjigdrlpxxdgy.jpg')",
+      }}
+    >
+      <Header />
+      <div className="flex flex-col items-center justify-center flex-grow gap-6 text-center">
+        <h1 className="text-5xl font-bold drop-shadow-md">
+          Discover Your Next Favorite Movie
         </h1>
-        <p 
-          className={`max-w-2xl mx-auto text-xl sm:text-2xl text-gray-600 mb-10 transition-all duration-1000 delay-300 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col sm:flex-row gap-4 mb-8 w-full sm:w-auto"
         >
-          Innovating the future, one solution at a time. I bring cutting-edge technology to solve real-world problems.
-        </p>
-        <Button 
-          size="lg"
-          className={`text-lg px-8 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 ease-in-out transform hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-        >
-          Get Started
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
+          <input
+            type="text"
+            placeholder="Search for a movie"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="px-4 py-3 rounded-lg w-full sm:w-[60rem] text-black focus:outline-none focus:ring-4 border-slate-200 border-1 text-center"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 px-6 py-3 rounded-lg text-white font-semibold hover:bg-blue-800 transition-all"
+          >
+            Search
+          </button>
+        </form>
+        {loading && <ReactLoading type="balls" color="#0000FF"
+                height={100} width={140} />}
+        {error && <p className="text-red-500">{error}</p>}
+
+        {/* Movie Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 mx-10">
+          {movies &&
+            movies.map(
+              (movie: {
+                id: string;
+                title: string;
+                year: number;
+                type: string;
+                image: string;
+                image_large: string;
+                api_path: string;
+                imdb: string;
+              }) => (
+                <div
+                  key={movie.id}
+                  className="bg-gray-800 p-4 rounded-lg flex flex-col w-[350px] h-[510px] shadow-lg transition-transform hover:scale-105"
+                >
+                  <img
+                    src={movie.image}
+                    alt={movie.title}
+                    className="w-full h-[200px] object-cover rounded-t-lg"
+                  />
+                  <div className="flex-grow p-2 text-left">
+                    <h3 className="text-xl font-bold text-center text-white truncate">
+                      {movie.title}
+                    </h3>
+                    <div className="mt-4 text-gray-300 space-y-2">
+                      <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-md">
+                        <FaCalendarAlt className="text-blue-400 text-lg" />
+                        <span className="font-semibold text-white">Year:</span>
+                        <span className="text-sm">{movie.year}</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-md">
+                        <FaStar className="text-yellow-500 text-lg" />
+                        <span className="font-semibold text-white">Type:</span>
+                        <span className="text-sm capitalize">{movie.type}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <a
+                      href={movie.imdb}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:underline text-sm flex items-center gap-1"
+                    >
+                      <FaGlobe className="text-green-500" />
+                      IMDb
+                    </a>
+                    <a
+                      href={movie.api_path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-red-600 px-4 py-2 rounded-lg text-white hover:bg-red-800 transition-all text-sm"
+                    >
+                      More Info
+                    </a>
+                  </div>
+                </div>
+              )
+            )}
+        </div>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-0 right-0 w-72 h-72 bg-slate-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-24 right-24 w-56 h-56 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-
-      {/* Inline styles for blob animation */}
-      <style>
-        {`
-          @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-          }
-          .animate-blob {
-            animation: blob 7s infinite;
-          }
-          .animation-delay-2000 {
-            animation-delay: 2s;
-          }
-          .animation-delay-4000 {
-            animation-delay: 4s;
-          }
-        `}
-      </style>
     </div>
-  )
-}
+  );
+};
+
+export default HeroSection;
