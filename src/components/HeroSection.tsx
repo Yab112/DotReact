@@ -3,6 +3,8 @@ import { FaCalendarAlt, FaGlobe, FaStar } from "react-icons/fa";
 import Header from "./Header";
 import { useMovieContext } from "../context/MoviesContext";
 import ReactLoading from "react-loading";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HeroSection: React.FC = () => {
   const { getMovies, movies, loading, error } = useMovieContext();
@@ -10,10 +12,35 @@ const HeroSection: React.FC = () => {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      await getMovies(query);
+    if (!query.trim()) {
+      toast.warn("Please enter a search query.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
     }
+    await getMovies(query);
   };
+
+  // Display error toaster if an error exists
+  if (error) {
+    toast.error(error, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
 
   return (
     <div
@@ -46,9 +73,15 @@ const HeroSection: React.FC = () => {
             Search
           </button>
         </form>
-        {loading && <ReactLoading type="balls" color="#0000FF"
-                height={100} width={140} />}
-        {error && <p className="text-red-500">{error}</p>}
+        {loading && (
+          <ReactLoading
+            type="spin"
+            color="#f5db16"
+            height={100}
+            width={100}
+            className="mt-4"
+          />
+        )}
 
         {/* Movie Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 mx-10">
